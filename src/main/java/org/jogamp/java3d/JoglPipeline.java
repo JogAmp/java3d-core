@@ -7377,6 +7377,9 @@ void swapBuffers(Canvas3D cv, Context ctx, Drawable drawable) {
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         // Restore attributes
         gl.glPopAttrib();
+        
+        // restore writing to the depth buffer
+        gl.glDepthMask(true); 
 
     }
 
