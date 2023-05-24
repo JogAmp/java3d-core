@@ -56,6 +56,7 @@ import org.jogamp.vecmath.Vector4f;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.common.os.Platform;
+import com.jogamp.common.util.VersionNumber;
 import com.jogamp.nativewindow.AbstractGraphicsDevice;
 import com.jogamp.nativewindow.AbstractGraphicsScreen;
 import com.jogamp.nativewindow.CapabilitiesChooser;
@@ -6791,23 +6792,15 @@ class Jogl2es2Pipeline extends Jogl2es2DEPPipeline {
 				}
 
 				if (Platform.getOSName().equalsIgnoreCase("Windows 10") && //win10
-					(Platform.JAVA_VERSION_NUMBER.compareTo(Platform.Version18) > 0) || // 1.9 or 1.8 > 51 //Version 19 was swapped to version 9 due to JEP 223 in jogl 2.4.0
-					(Platform.JAVA_VERSION_NUMBER.compareTo(Platform.Version18) == 0
-						&& Platform.JAVA_VERSION_UPDATE > 51)							&& //
-																						Platform.getJavaVMName()
-																								.toLowerCase()
-																								.startsWith(
-																										"java hotspot(tm)"))// e.g. Java HotSpot(TM) 64-Bit Server VM ; OpenJDK would give OpenJDK 64-Bit Server VM
+						(Platform.JAVA_VERSION_NUMBER.compareTo(new VersionNumber(1, 8, 0)) > 0) || // 1.9 or 1.8 > 51 //Version 19 was swapped to version 9 due to JEP 223 in jogl 2.4.0
+						(Platform.JAVA_VERSION_NUMBER.compareTo(new VersionNumber(1, 8, 0)) == 0 && Platform.JAVA_VERSION_UPDATE > 51) && //
+								Platform.getJavaVMName().toLowerCase().startsWith("java hotspot(tm)"))// e.g. Java HotSpot(TM) 64-Bit Server VM ; OpenJDK would give OpenJDK 64-Bit Server VM
 				{
-					System.err.println(
-							"Issue: The use of an Intel HD2000/3000 driver in combination with Windows 10 and");
-					System.err.println(
-							"a JRE greater than 1.8 update 51. Please downgrade the JRE in use to JRE 1.8u51 or lower.");
-					System.err.println(
-							"For more information please see https://jogamp.org/bugzilla/show_bug.cgi?id=1278.");
+					System.err.println("Issue: The use of an Intel HD2000/3000 driver in combination with Windows 10 and");
+					System.err.println("a JRE greater than 1.8 update 51. Please downgrade the JRE in use to JRE 1.8u51 or lower.");
+					System.err.println("For more information please see https://jogamp.org/bugzilla/show_bug.cgi?id=1278.");
 				}
-				System.err.println(
-						"If this software has been supplied to you and you are unable to modify it's configuration");
+				System.err.println("If this software has been supplied to you and you are unable to modify it's configuration");
 				System.err.println("please contact the suppler of this software with this entire message.");
 			}
 
