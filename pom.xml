@@ -97,7 +97,7 @@
 	</scm>
 	
 	<properties>
-		<jogamp.version>2.3.2</jogamp.version>
+		<jogamp.version>2.4.0</jogamp.version>
 
 		<!-- NB: Token values for filtering VersionInfo.java. -->
 		<version_base>1.7.1</version_base>
@@ -124,7 +124,20 @@
 		<!-- Deploy to OSS Sonatype repository by default when releasing. -->
 		<releaseProfiles>sonatype-oss-release</releaseProfiles>
 	</properties>
-
+	<repositories>
+          <repository>
+            <id>jogamp-remote</id>
+            <name>jogamp test mirror</name>
+            <url>https://www.jogamp.org/deployment/maven/</url>
+            <layout>default</layout>
+          </repository>
+          <repository>
+            <id>jogamp-java3d-remote</id>
+            <name>jogamp java3d test mirror</name>
+            <url>https://www.jogamp.org/deployment/maven-java3d/</url>
+            <layout>default</layout>
+          </repository>
+    </repositories>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

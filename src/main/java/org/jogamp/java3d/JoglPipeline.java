@@ -79,6 +79,7 @@ import com.jogamp.opengl.Threading;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.common.os.Platform;
+import com.jogamp.common.util.VersionNumber;
 import com.jogamp.nativewindow.awt.AWTGraphicsConfiguration;
 import com.jogamp.nativewindow.awt.AWTGraphicsDevice;
 import com.jogamp.nativewindow.awt.AWTGraphicsScreen;
@@ -8130,8 +8131,8 @@ static boolean hasFBObjectSizeChanged(JoglDrawable jdraw, int width, int height)
 				}
 				
 				if (Platform.getOSName().equalsIgnoreCase("Windows 10") && //win10
-						(Platform.JAVA_VERSION_NUMBER.compareTo(Platform.Version18) > 0) || // 1.9 or 1.8 > 51 //Version 19 was swapped to version 9 due to JEP 223 in jogl 2.4.0
-						(Platform.JAVA_VERSION_NUMBER.compareTo(Platform.Version18) == 0 && Platform.JAVA_VERSION_UPDATE > 51) && //
+						(Platform.JAVA_VERSION_NUMBER.compareTo(new VersionNumber(1, 8, 0)) > 0) || // 1.9 or 1.8 > 51 //Version 19 was swapped to version 9 due to JEP 223 in jogl 2.4.0
+						(Platform.JAVA_VERSION_NUMBER.compareTo(new VersionNumber(1, 8, 0)) == 0 && Platform.JAVA_VERSION_UPDATE > 51) && //
 								Platform.getJavaVMName().toLowerCase().startsWith("java hotspot(tm)"))// e.g. Java HotSpot(TM) 64-Bit Server VM ; OpenJDK would give OpenJDK 64-Bit Server VM
 				{					
 					System.err.println("Issue: The use of an Intel HD2000/3000 driver in combination with Windows 10 and");
