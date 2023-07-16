@@ -3379,7 +3379,7 @@ class Jogl2es2Pipeline extends Jogl2es2DEPPipeline
 					if (!MINIMISE_NATIVE_CALLS_FFP || (shaderProgramId != ctx.prevShaderProgram
 							|| ctx.gl_state.alphaTestFunction != ctx.renderingData.alphaTestFunction))
 					{
-						gl.glUniform1i(locs.alphaTestFunction, getFunctionValue(ctx.renderingData.alphaTestFunction));
+						gl.glUniform1i(locs.alphaTestFunction, ctx.renderingData.alphaTestFunction);
 						if (MINIMISE_NATIVE_CALLS_FFP)
 							ctx.gl_state.alphaTestFunction = ctx.renderingData.alphaTestFunction;
 					}
