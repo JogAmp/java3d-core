@@ -65,40 +65,29 @@ abstract class Pipeline {
     protected Pipeline() {
     }
 
-private static class PipelineCreator
-implements java.security.PrivilegedAction<Pipeline> {
-private final Type pipeType;
-
-PipelineCreator(Type type) {
-	pipeType = type;
-}
-
-@Override
-public Pipeline run() {
-	try {
-		switch (pipeType) {
-		case JOGL:
-			return (Pipeline)Class.forName("org.jogamp.java3d.JoglPipeline").newInstance();
-		case JOGL2ES2:
-			return (Pipeline)Class.forName("org.jogamp.java3d.Jogl2es2Pipeline").newInstance();
-		case NOOP:
-			return (Pipeline)Class.forName("org.jogamp.java3d.NoopPipeline").newInstance();
-		}
-	} catch (Exception e) {
-		throw new RuntimeException(e);
-	}
-	return null;
-}
-}
-
     /**
      * Initialize the Pipeline. Called exactly once by
      * MasterControl.loadLibraries() to create the singleton
      * Pipeline object.
      */
     static void createPipeline(Type pipelineType) {
-		pipeline = java.security.AccessController.doPrivileged(new PipelineCreator(pipelineType));
-		pipeline.initialize(pipelineType);
+    	try {
+    		switch (pipelineType) {
+    		case JOGL:
+    			pipeline = new org.jogamp.java3d.JoglPipeline();
+    			break;
+    		case JOGL2ES2:
+    			pipeline = new org.jogamp.java3d.Jogl2es2Pipeline();
+    			break;
+    		case NOOP:
+    			pipeline = new org.jogamp.java3d.NoopPipeline();
+    			break;
+    		}
+    	} catch (Exception e) {
+    		throw new RuntimeException(e);
+    	}
+    	if(pipeline != null)
+    		pipeline.initialize(pipelineType);
     }
 
     /**

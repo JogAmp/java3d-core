@@ -9372,6 +9372,25 @@ class Jogl2es2Pipeline extends Jogl2es2DEPPipeline
 
 		GraphicsConfigInfo gcInf0 = Canvas3D.graphicsConfigTable.get(gconfig);
 		AWTGraphicsConfiguration awtConfig = (AWTGraphicsConfiguration) gcInf0.getPrivateData();
+		
+		/* at Platform.JAVA_VERSION_NUMBER 20.0.2 this program argument is compulsory due to calls within Jogl
+		 * Note that some jdks (14-21) don't offer the WARNING, but they fail and are fixed the same way
+		WARNING: A restricted method in java.lang.System has been called
+		WARNING: java.lang.System::load has been called by com.jogamp.common.jvm.JNILibLoaderBase in an unnamed module (file:/C:/Users/pjnz/.m2/repository/org/jogamp/gluegen/gluegen-rt/2.6.0/gluegen-rt-2.6.0.jar)
+		WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+		WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+		
+		 *so if awtConfig is null check  jre version and offer advice	
+		 */
+
+		if (awtConfig == null && (Platform.JAVA_VERSION_NUMBER.compareTo(new VersionNumber(20, 0, 0)) >= 0)) {	
+			System.err.println("Platform.JAVA_VERSION_NUMBER "	+ Platform.JAVA_VERSION_NUMBER + " >= "
+								+ new VersionNumber(20, 0, 0));
+			System.err.println("Possibly a restricted method in java.lang.System has been called");
+			System.err.println("Try adding the argument below to your VM arguments (Note: not your program arguments)");
+			System.err.println("--add-opens java.desktop/sun.awt=ALL-UNNAMED");
+		}			
+
 
 		return awtConfig.getAWTGraphicsConfiguration();
 	}
